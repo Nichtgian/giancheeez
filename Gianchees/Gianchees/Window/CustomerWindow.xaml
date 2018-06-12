@@ -1,0 +1,87 @@
+﻿<Window x:Class="Gianchees.CustomerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gianchees"
+        mc:Ignorable="d"
+        Title="Customer" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="40*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="70*"/>
+            </Grid.RowDefinitions>
+            <ComboBox x:Name="comboBoxFoodtypes" ItemsSource="{Binding Model.Foodtypes}" SelectionChanged="selectFoodtype">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Type}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ListView Grid.Row="1" ItemsSource="{Binding Path=Local.SelectedFoodtype.Foods}" SelectionChanged="addFoodToOrder">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Name: "/>
+                                <TextBlock Text="Price: "/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding Path=Name}"/>
+                                <TextBlock Text="{Binding Path=Price}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100*"/>
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="100*"/>
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <TextBlock Text="{Binding Path=Local.Order.ID}"/>
+                </StackPanel>
+                <ListView Grid.Row="1" ItemsSource="{Binding Path=Local.Order.Orders, Mode=TwoWay}" SelectionChanged="selectFood">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="Name: "/>
+                                    <TextBlock Text="Amount: "/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding Path=Food.Name}"/>
+                                    <TextBlock Text="{Binding Path=Amount}"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Button Content="Order" Margin="252,0,0,0" Click="order"/>
+                <Button Content="Clear Order" Margin="0,0,281,0" Click="clearOrders"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
